@@ -12,7 +12,8 @@ $query = "
         cpf
     FROM
         clientes
-    WHERE ativo = 1
+    WHERE TRUE
+        AND ativo = 1
 ";
 
 $stmt = $pdo->query($query);

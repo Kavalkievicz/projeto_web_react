@@ -16,7 +16,21 @@ if (empty($nome) || empty($telefone) || empty($cpf)) {
     exit();
 }
 
-$query = $pdo->prepare("INSERT INTO clientes (nome, telefone, cpf) VALUES (:nome, :telefone, :cpf)");
+$query = $pdo->prepare("
+    INSERT INTO clientes
+    (
+        nome,
+        telefone,
+        cpf
+    )
+    VALUES
+    (
+        :nome,
+        :telefone,
+        :cpf
+    )
+");
+
 $query->bindParam(':nome', $nome);
 $query->bindParam(':telefone', $telefone);
 $query->bindParam(':cpf', $cpf);

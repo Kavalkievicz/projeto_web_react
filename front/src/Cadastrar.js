@@ -31,37 +31,42 @@ function Cadastrar() {
     };
 
     return (
-        <div>
-            <h2>Cadastrar Cliente</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Nome:</label>
-                    <input
-                        type="text"
-                        value={nome}
-                        onChange={(e) => setNome(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label>Telefone:</label>
-                    <input
-                        type="text"
-                        value={telefone}
-                        onChange={(e) => setTelefone(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label>CPF:</label>
-                    <input
-                        type="text"
-                        value={cpf}
-                        onChange={(e) => setCpf(e.target.value)}
-                    />
-                </div>
-                <button type="submit">Cadastrar</button>
-            </form>
+        <div className="container d-flex justify-content-center mt-5">
+            <div className="card p-4" style={{ width: '400px' }}>
+                <h2 className="text-center">Cadastrar Cliente</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label className="form-label">Nome:</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={nome}
+                            onChange={(e) => setNome(e.target.value)}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Telefone:</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={telefone}
+                            onChange={(e) => setTelefone(e.target.value)}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">CPF:</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={cpf}
+                            onChange={(e) => setCpf(e.target.value)}
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-primary w-100">Cadastrar</button>
+                </form>
+            </div>
         </div>
-    );
+    );    
 }
 
 export default Cadastrar;

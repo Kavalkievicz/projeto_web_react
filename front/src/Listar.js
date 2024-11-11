@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { FaTrash } from 'react-icons/fa'
 
 function Listar() {
     const [clientes, setClientes] = useState([]);
@@ -15,34 +16,42 @@ function Listar() {
     }, []);
 
     return (
-        <div>
-            <h2>Listar Clientes</h2>
-            <table>
-                <thead>
+        <div className="container mt-4">
+            <h2 className="mb-3">Clientes cadastrados</h2>
+            <table className="table table-striped table-bordered table-hover">
+                <thead className="table-primary">
                     <tr>
-                        <th>Nome</th>
-                        <th>Telefone</th>
-                        <th>CPF</th>
+                        <th className="text-left align-middle">Nome</th>
+                        <th className="text-center align-middle">Telefone</th>
+                        <th className="text-center align-middle">CPF</th>
+                        <th className="text-center align-middle">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
                     {clientes.length > 0 ? (
                         clientes.map((cliente, index) => (
                             <tr key={index}>
-                                <td>{cliente.nome}</td>
-                                <td>{cliente.telefone}</td>
-                                <td>{cliente.cpf}</td>
+                                <td className="text-left align-middle">{cliente.nome}</td>
+                                <td className="text-center align-middle">{cliente.telefone}</td>
+                                <td className="text-center align-middle">{cliente.cpf}</td>
+                                <td className="text-center align-middle">
+                                    <button className="btn btn-danger">
+                                        <FaTrash />
+                                    </button>
+                                </td>
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="3">Nenhum cliente cadastrado.</td>
+                            <td colSpan="4" className="text-center">
+                                Nenhum cliente cadastrado.
+                            </td>
                         </tr>
                     )}
                 </tbody>
             </table>
         </div>
-    );
+    );    
 }
 
 export default Listar;
