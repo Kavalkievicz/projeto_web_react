@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import CadastrarEspecialidade from "./CadastrarEspecialidade";
 
 function Cadastrar() {
     const [cnpj, setCnpj] = useState("");
@@ -9,6 +10,37 @@ function Cadastrar() {
     const [cidade, setCidade] = useState("");
     const [telefone, setTelefone] = useState("");
     const [especialidade, setEspecialidade] = useState("");
+    const [especialidades, setEspecialidades] = useState([]);
+    const [showEspecialidadeModal, setShowEspecialidadeModal] = useState(false);
+
+    useEffect(() => {
+        fetch("http://localhost/projeto_web_react/api/listar_especialidades.php")
+            .then((response) => response.json())
+            .then((data) => setEspecialidades(data))
+            .catch((error) => console.error("Erro ao carregar especialidades:", error));
+    }, []);
+
+    const handleOpenEspecialidadeModal = () => setShowEspecialidadeModal(true);
+    const handleCloseEspecialidadeModal = () => setShowEspecialidadeModal(false);
+
+    const formatCNPJ = (value) => {
+        return value
+            .replace(/\D/g, "") // Remove todos os caracteres não numéricos
+            .replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5"); // Aplica a máscara
+    };
+
+    const handleCnpjChange = (e) => {
+        const formattedCnpj = formatCNPJ(e.target.value);
+        setCnpj(formattedCnpj);
+    };
+
+    const handleTelefoneChange = (e) => {
+        let value = e.target.value;
+    
+        value = value.replace(/\D/g, "");
+    
+        setTelefone(value);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,18 +56,18 @@ function Cadastrar() {
             especialidade,
         };
     
-        fetch("http://localhost/web_projeto/cadastrar.php", {
+        fetch("http://localhost/projeto_web_react/api/cadastrar.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(clienteData),
         })
-        .then((response) => response.json())
-        .then((data) => {
-            alert("Cadastro realizado com sucesso!");
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message || "Cadastro realizado com sucesso!");
         })
-        .catch((error) => {
+        .catch(error => {
             console.error("Erro ao cadastrar:", error);
         });
     };
@@ -52,7 +84,8 @@ function Cadastrar() {
                                 type="text"
                                 className="form-control"
                                 value={cnpj}
-                                onChange={(e) => setCnpj(e.target.value)}
+                                onChange={handleCnpjChange}
+                                maxLength={18}
                             />
                         </div>
                         <div className="col-md-6 mb-3">
@@ -61,7 +94,8 @@ function Cadastrar() {
                                 type="text"
                                 className="form-control"
                                 value={telefone}
-                                onChange={(e) => setTelefone(e.target.value)}
+                                onChange={handleTelefoneChange}
+                                maxLength={11}
                             />
                         </div>
                         <div className="col-md-6 mb-3">
@@ -111,17 +145,30 @@ function Cadastrar() {
                         </div>
                         <div className="col-md-12 mb-3">
                             <label className="form-label">Especialidade:</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={especialidade}
-                                onChange={(e) => setEspecialidade(e.target.value)}
-                            />
+                            <div className="d-flex align-items-center">
+                                <select className="form-control" value={especialidade} onChange={(e) => setEspecialidade(e.target.value)} >
+                                    <option value="">Selecione</option>
+                                    {especialidades.map((esp) => (
+                                        <option key={esp.id} value={esp.especialidade}>{esp.especialidade}</option>
+                                    ))}
+                                </select>
+                                <button
+                                    type="button"
+                                    className="btn btn-link"
+                                    onClick={handleOpenEspecialidadeModal}
+                                >
+                                    +
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <button type="submit" className="btn btn-primary w-100">Cadastrar</button>
                 </form>
             </div>
+
+            {showEspecialidadeModal && (
+                <CadastrarEspecialidade onClose={handleCloseEspecialidadeModal} />
+            )}
         </div>
     );    
 }

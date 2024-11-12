@@ -5,21 +5,17 @@ header("Access-Control-Allow-Headers: Content-Type");
 header('Content-Type: application/json');
 include 'db_config.php';
 
-$filtro = $_GET['filtro'] ?? 'todos';
+$filtro = isset($_GET['filtro']) ? $_GET['filtro'] : 'todos';
 
 $query = "
     SELECT
-        nome,
-        telefone,
-        cpf
+        *
     FROM
-        clientes
-    WHERE TRUE
-        AND ativo = 1
+        tb_restaurantes
 ";
 
 if ($filtro != 'todos') {
-    $query .= " AND categoria = :filtro";
+    $query .= " AND especialidade = :filtro";
 }
 
 $stmt = $pdo->prepare($query);

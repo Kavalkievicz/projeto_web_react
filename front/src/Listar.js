@@ -7,7 +7,7 @@ function Listar() {
     const [isFiltroAplicado, setIsFiltroAplicado] = useState(false);
 
     const fetchClientes = () => {
-        fetch(`http://localhost/web_projeto/listar.php?filtro=${filtro}`)
+        fetch(`http://localhost/projeto_web_react/api/listar.php?filtro=${filtro}`)
             .then((response) => response.json())
             .then((data) => {
                 setClientes(data);
@@ -44,9 +44,10 @@ function Listar() {
                 <table className="table table-striped table-bordered table-hover mt-4">
                     <thead className="table-primary">
                         <tr>
-                            <th className="text-left align-middle">Nome</th>
+                            <th className="text-left align-middle">Razão Social</th>
+                            <th className="text-left align-middle">Nome Fantasia</th>
                             <th className="text-center align-middle">Telefone</th>
-                            <th className="text-center align-middle">CPF</th>
+                            <th className="text-center align-middle">Especialidade</th>
                             <th className="text-center align-middle">Ação</th>
                         </tr>
                     </thead>
@@ -54,9 +55,10 @@ function Listar() {
                         {clientes.length > 0 ? (
                             clientes.map((cliente, index) => (
                                 <tr key={index}>
-                                    <td className="text-left align-middle">{cliente.nome}</td>
+                                    <td className="text-left align-middle">{cliente.razao_social}</td>
+                                    <td className="text-left align-middle">{cliente.nome_fantasia}</td>
                                     <td className="text-center align-middle">{cliente.telefone}</td>
-                                    <td className="text-center align-middle">{cliente.cpf}</td>
+                                    <td className="text-center align-middle">{cliente.especialidade}</td>
                                     <td className="text-center align-middle">
                                         <button className="btn btn-danger">
                                             <FaTrash />
@@ -66,7 +68,7 @@ function Listar() {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="4" className="text-center">
+                                <td colSpan="5" className="text-center">
                                     Nenhum cliente encontrado com o filtro selecionado.
                                 </td>
                             </tr>

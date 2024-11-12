@@ -7,9 +7,9 @@ include 'db_config.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-$razaoSocial = isset($data['razao_social']) ? trim($data['razao_social']) : '';
+$razaoSocial = isset($data['razaoSocial']) ? trim($data['razaoSocial']) : '';
 $cnpj = isset($data['cnpj']) ? trim($data['cnpj']) : '';
-$nomeFantasia = isset($data['nome_fantasia']) ? trim($data['nome_fantasia']) : '';
+$nomeFantasia = isset($data['nomeFantasia']) ? trim($data['nomeFantasia']) : '';
 $endereco = isset($data['endereco']) ? trim($data['endereco']) : '';
 $uf = isset($data['uf']) ? trim($data['uf']) : '';
 $cidade = isset($data['cidade']) ? trim($data['cidade']) : '';
@@ -35,9 +35,9 @@ $query = $pdo->prepare("
     )
     VALUES
     (
-        :razao_social,
+        :razaoSocial,
         :cnpj,
-        :nome_fantasia,
+        :nomeFantasia,
         :endereco,
         :uf,
         :cidade,
@@ -46,13 +46,13 @@ $query = $pdo->prepare("
     )
 ");
 
-$query->bindParam(':razao_social', $nome);
-$query->bindParam(':cnpj', $telefone);
-$query->bindParam(':nome_fantasia', $cpf);
-$query->bindParam(':endereco', $cpf);
-$query->bindParam(':uf', $cpf);
-$query->bindParam(':cidade', $cpf);
-$query->bindParam(':especialidade', $cpf);
+$query->bindParam(':razaoSocial', $razaoSocial);
+$query->bindParam(':cnpj', $cnpj);
+$query->bindParam(':nomeFantasia', $nomeFantasia);
+$query->bindParam(':endereco', $endereco);
+$query->bindParam(':uf', $uf);
+$query->bindParam(':cidade', $cidade);
+$query->bindParam(':especialidade', $especialidade);
 $query->bindParam(':telefone', $telefone);
 
 if ($query->execute()) {
