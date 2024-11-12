@@ -23,18 +23,12 @@ function App() {
                 <h4>Menu</h4>
                 <ul className="list-unstyled">
                     <li>
-                        <button 
-                            className="btn btn-link" 
-                            onClick={() => setActiveComponent('cadastrar')}
-                        >
+                        <button className="btn btn-link" onClick={() => setActiveComponent('cadastrar')}>
                             Cadastrar Cliente
                         </button>
                     </li>
                     <li>
-                        <button 
-                            className="btn btn-link" 
-                            onClick={() => setActiveComponent('listar')}
-                        >
+                        <button className="btn btn-link" onClick={() => setActiveComponent('listar')}>
                             Listar Clientes
                         </button>
                     </li>

@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$dbname = 'estacionamento';
+$dbname = 'restaurantes';
 $username = 'root';
 $password = '';
 
