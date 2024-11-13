@@ -9,9 +9,9 @@ function App() {
     const renderComponent = () => {
         switch (activeComponent) {
             case 'cadastrar':
-                return <Cadastrar />;
+                return <Cadastrar/>;
             case 'listar':
-                return <Listar />;
+                return <Listar/>;
             default:
                 return <div>Selecione uma opção no menu</div>;
         }
@@ -20,16 +20,16 @@ function App() {
     return (
         <div className="d-flex">
             <div className="bg-light p-3" style={{ width: '250px', minHeight: '100vh' }}>
-                <h4>Menu</h4>
+                <h4 className="text-center align-middle">Menu</h4>
                 <ul className="list-unstyled">
                     <li>
                         <button className="btn btn-link" onClick={() => setActiveComponent('cadastrar')}>
-                            Cadastrar Cliente
+                            Cadastrar Restaurante
                         </button>
                     </li>
                     <li>
                         <button className="btn btn-link" onClick={() => setActiveComponent('listar')}>
-                            Listar Clientes
+                            Listar Restaurantes
                         </button>
                     </li>
                 </ul>

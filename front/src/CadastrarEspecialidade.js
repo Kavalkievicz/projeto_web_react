@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 
-function CadastrarEspecialidade({ onClose }) {
+function CadastrarEspecialidade({ onClose, onEspecialidadeCadastrada }) {
     const [especialidade, setEspecialidade] = useState("");
 
     const handleSubmit = (e) => {
@@ -16,15 +17,29 @@ function CadastrarEspecialidade({ onClose }) {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                alert("Especialidade cadastrada com sucesso!");
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sucesso!',
+                    text: data.message || 'Especialidade cadastrada com sucesso!',
+                });
+
                 onClose();
+                onEspecialidadeCadastrada();
             } else {
-                alert(data.message || "Erro ao cadastrar especialidade.");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro!',
+                    text: data.message || 'Erro ao cadastrar especialidade!',
+                });
             }
         })
         .catch(error => {
             console.error("Erro ao cadastrar especialidade:", error);
-            alert("Erro ao cadastrar especialidade.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro!',
+                text: 'Erro ao cadastrar especialidade!',
+            });
         });
     };
 
@@ -34,9 +49,6 @@ function CadastrarEspecialidade({ onClose }) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Cadastrar Especialidade</h5>
-                        <button type="button" className="close" onClick={onClose}>
-                            <span>&times;</span>
-                        </button>
                     </div>
                     <div className="modal-body">
                         <form onSubmit={handleSubmit}>
@@ -51,7 +63,10 @@ function CadastrarEspecialidade({ onClose }) {
                                     required
                                 />
                             </div>
-                            <button type="submit" className="btn btn-primary mt-3">Gravar</button>
+                            <div className="mt-3 d-flex justify-content-between">
+                                <button type="submit" className="btn btn-primary">Gravar</button>
+                                <button type="button" className="btn btn-secondary" onClick={onClose}>Cancelar</button>
+                            </div>
                         </form>
                     </div>
                 </div>
