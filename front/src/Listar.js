@@ -89,12 +89,12 @@ function Listar() {
                         </option>
                     ))}
                 </select>
-                <button className="btn btn-primary mt-2" onClick={handleGenerateClick}>Gerar</button>
+                <button className="btn btn-danger mt-2" onClick={handleGenerateClick}>Gerar</button>
             </div>
 
             {isFiltroAplicado && (
                 <table className="table table-striped table-bordered table-hover mt-4">
-                    <thead className="table-primary">
+                    <thead className="table-gray">
                         <tr>
                             <th className="text-left align-middle">Nome Fantasia</th>
                             <th className="text-center align-middle">Telefone</th>

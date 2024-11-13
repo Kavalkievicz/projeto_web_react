@@ -64,7 +64,7 @@ function CadastrarEspecialidade({ onClose, onEspecialidadeCadastrada }) {
                                 />
                             </div>
                             <div className="mt-3 d-flex justify-content-between">
-                                <button type="submit" className="btn btn-primary">Gravar</button>
+                                <button type="submit" className="btn btn-danger">Gravar</button>
                                 <button type="button" className="btn btn-secondary" onClick={onClose}>Cancelar</button>
                             </div>
                         </form>

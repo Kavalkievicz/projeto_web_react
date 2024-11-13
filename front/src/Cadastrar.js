@@ -34,18 +34,8 @@ function Cadastrar() {
             .replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
     };
 
-    const handleCnpjChange = (e) => {
-        const formattedCnpj = formatCNPJ(e.target.value);
-        setCnpj(formattedCnpj);
-    };
-
-    const handleTelefoneChange = (e) => {
-        let value = e.target.value;
-
-        value = value.replace(/\D/g, "");
-
-        setTelefone(value);
-    };
+    const handleCnpjChange = (e) => setCnpj(formatCNPJ(e.target.value));
+    const handleTelefoneChange = (e) => setTelefone(e.target.value.replace(/\D/g, ""));
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -76,24 +66,37 @@ function Cadastrar() {
                 text: data.message || 'Cadastro realizado com sucesso!',
             });
 
-            setCnpj("");
-            setRazaoSocial("");
-            setNomeFantasia("");
-            setEndereco("");
-            setUf("");
-            setCidade("");
-            setTelefone("");
-            setEspecialidade("");
+            limparFormulario();
         })
-        .catch(error => {
-            console.error("Erro ao cadastrar:", error);
-        });
+        .catch(error => console.error("Erro ao cadastrar:", error));
+    };
+
+    const limparFormulario = () => {
+        setCnpj("");
+        setRazaoSocial("");
+        setNomeFantasia("");
+        setEndereco("");
+        setUf("");
+        setCidade("");
+        setTelefone("");
+        setEspecialidade("");
     };
 
     return (
         <div className="container d-flex justify-content-center mt-5">
-            <div className="card p-4" style={{ width: '600px' }}>
-                <h2 className="text-center">Cadastrar Restaurante</h2>
+            <div
+                className="card p-4 shadow"
+                style={{
+                    width: '700px',
+                    backgroundImage: 'url ("projeto_web_react/blob/main/front/public/fundo.png")',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundBlendMode: 'overlay',
+                    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                    borderRadius: '10px'
+                }}
+            >
+                <h2 className="text-center mb-4" style={{ color: '#343a40' }}>Cadastrar Restaurante</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="col-md-6 mb-3">
@@ -133,19 +136,23 @@ function Cadastrar() {
                                         <option key={esp.id} value={esp.especialidade}>{esp.especialidade}</option>
                                     ))}
                                 </select>
-                            <button type="button" className="btn btn-link" onClick={handleOpenEspecialidadeModal}>
-                                +
-                            </button>
-                        </div>
+                                <button
+                                    type="button"
+                                    className="btn btn-link text-danger fw-bold fs-4 ms-2"
+                                    style={{ textDecoration: 'none' }}
+                                    onClick={handleOpenEspecialidadeModal}
+                                >
+                                    +
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <button type="submit" className="btn btn-primary w-100">Cadastrar</button>
+                    <button type="submit" className="btn btn-danger w-100 mt-3">Cadastrar</button>
                 </form>
+                {showEspecialidadeModal && (
+                    <CadastrarEspecialidade onClose={handleCloseEspecialidadeModal} onEspecialidadeCadastrada={atualizarEspecialidades}/>
+                )}
             </div>
-
-            {showEspecialidadeModal && (
-                <CadastrarEspecialidade onClose={handleCloseEspecialidadeModal} onEspecialidadeCadastrada={atualizarEspecialidades}/>
-            )}
         </div>
     );
 }
