@@ -9,10 +9,21 @@ function App() {
     const [isMenuOpen, setIsMenuOpen] = useState(true);
 
     return (
-        <div className="d-flex">
+        <div
+            className="d-flex"
+            style={{
+                minHeight: '100vh',
+                width: '100vw',
+                backgroundImage: 'url("/imagem_fundo.png")',
+                backgroundSize: 'contain',
+                backgroundPosition: '85% center',
+                backgroundRepeat: 'no-repeat',
+                backgroundColor: '#f0f0f0'
+            }}
+        >
             <div
                 className={`bg-dark text-white p-4 ${isMenuOpen ? 'menu-open' : 'menu-closed'}`}
-                style={{ minHeight: '100vh', transition: 'width 0.3s', width: isMenuOpen ? '250px' : '80px'}}
+                style={{ minHeight: '100vh', transition: 'width 0.3s', width: isMenuOpen ? '250px' : '80px' }}
             >
                 <button className="btn btn-link text-white d-flex align-items-center mb-4" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ textDecoration: 'none' }}>
                     {isMenuOpen ? <FaChevronLeft className="me-2" /> : <FaChevronRight className="me-2" />}
@@ -42,9 +53,10 @@ function App() {
                     </li>
                 </ul>
             </div>
-            <div className="flex-grow-1 p-4">
-                {activeComponent === 'cadastrar' && <Cadastrar/>}
-                {activeComponent === 'listar' && <Listar/>}
+
+            <div className="flex-grow-1 p-4" style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', marginTop: '50px' }}>
+                {activeComponent === 'cadastrar' && <Cadastrar />}
+                {activeComponent === 'listar' && <Listar />}
             </div>
         </div>
     );

@@ -40,6 +40,16 @@ function Cadastrar() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if (!cnpj || !razaoSocial || !nomeFantasia || !endereco || !uf || !cidade || !telefone || !especialidade) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campo obrigatório!',
+                text: 'Por favor, preencha todos os campos obrigatórios.',
+            });
+
+            return;
+        }
+
         const clienteData = {
             cnpj,
             razaoSocial,
@@ -88,7 +98,6 @@ function Cadastrar() {
                 className="card p-4 shadow"
                 style={{
                     width: '700px',
-                    backgroundImage: 'url ("projeto_web_react/blob/main/front/public/fundo.png")',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundBlendMode: 'overlay',
