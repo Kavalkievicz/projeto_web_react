@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CadastrarEspecialidade from "./CadastrarEspecialidade";
 import Swal from "sweetalert2";
+import { listarEspecialidades, cadastrarRestaurante } from "./apiService";
 
 function Cadastrar() {
     const [cnpj, setCnpj] = useState("");
@@ -18,11 +19,17 @@ function Cadastrar() {
         atualizarEspecialidades();
     }, []);
 
-    const atualizarEspecialidades = () => {
-        fetch("http://localhost/projeto_web_react/api/listar_especialidades.php")
-            .then((response) => response.json())
-            .then((data) => setEspecialidades(data))
-            .catch((error) => console.error("Erro ao carregar especialidades:", error));
+    const atualizarEspecialidades = async () => {
+        try {
+            const data = await listarEspecialidades();
+            setEspecialidades(data);
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Erro",
+                text: "Erro ao carregar especialidades.",
+            });
+        }
     };
 
     const handleOpenEspecialidadeModal = () => setShowEspecialidadeModal(true);
@@ -37,16 +44,15 @@ function Cadastrar() {
     const handleCnpjChange = (e) => setCnpj(formatCNPJ(e.target.value));
     const handleTelefoneChange = (e) => setTelefone(e.target.value.replace(/\D/g, ""));
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!cnpj || !razaoSocial || !nomeFantasia || !endereco || !uf || !cidade || !telefone || !especialidade) {
             Swal.fire({
-                icon: 'warning',
-                title: 'Campo obrigatório!',
-                text: 'Por favor, preencha todos os campos obrigatórios.',
+                icon: "warning",
+                title: "Campo obrigatório!",
+                text: "Por favor, preencha todos os campos obrigatórios.",
             });
-
             return;
         }
 
@@ -61,24 +67,21 @@ function Cadastrar() {
             especialidade,
         };
 
-        fetch("http://localhost/projeto_web_react/api/cadastrar.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(clienteData),
-        })
-        .then(response => response.json())
-        .then(data => {
+        try {
+            const data = await cadastrarRestaurante(clienteData);
             Swal.fire({
                 icon: data.status,
                 title: data.status,
-                text: data.message || 'Cadastro realizado com sucesso!',
+                text: data.message || "Cadastro realizado com sucesso!",
             });
-
             limparFormulario();
-        })
-        .catch(error => console.error("Erro ao cadastrar:", error));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Erro",
+                text: "Erro ao realizar o cadastro.",
+            });
+        }
     };
 
     const limparFormulario = () => {
