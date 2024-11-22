@@ -9,7 +9,6 @@ function CadastrarEspecialidade({ onClose, onEspecialidadeCadastrada }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Chamando o serviço (Facade)
         EspecialidadeService.cadastrarEspecialidade(especialidade)
             .then(data => {
                 if (data.status === "success") {
@@ -18,8 +17,8 @@ function CadastrarEspecialidade({ onClose, onEspecialidadeCadastrada }) {
                         title: "Sucesso!",
                         text: data.message || "Especialidade cadastrada com sucesso!",
                     });
-                    onClose(); // Notifica o componente pai (Observer)
-                    onEspecialidadeCadastrada(); // Atualiza o estado no pai
+                    onClose();
+                    onEspecialidadeCadastrada();
                 } else {
                     Swal.fire({
                         icon: "error",
@@ -58,7 +57,7 @@ function CadastrarEspecialidade({ onClose, onEspecialidadeCadastrada }) {
         </form>
     );
 
-    return createModal("Cadastrar Especialidade", modalContent, onClose); // Modal dinâmico (Factory)
+    return createModal("Cadastrar Especialidade", modalContent, onClose);
 }
 
 export default CadastrarEspecialidade;

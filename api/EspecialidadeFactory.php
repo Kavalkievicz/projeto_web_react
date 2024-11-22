@@ -1,19 +1,22 @@
 <?php
-class EspecialidadeFactory {
-    public static function create($especialidade) {
-        return new Especialidade($especialidade);
-    }
-}
-
 class Especialidade {
-    private $especialidade;
+    private $nome;
 
-    public function __construct($especialidade) {
-        $this->especialidade = $especialidade;
+    public function __construct(string $nome) {
+        $this->nome = $nome;
     }
 
-    public function getEspecialidade() {
-        return $this->especialidade;
+    public function getNome(): string {
+        return $this->nome;
     }
 }
-?>
+
+abstract class EspecialidadeFactory {
+    abstract public static function criarEspecialidade(string $nome): Especialidade;
+}
+
+class EspecialidadeConcretaFactory extends EspecialidadeFactory {
+    public static function criarEspecialidade(string $nome): Especialidade {
+        return new Especialidade($nome);
+    }
+}

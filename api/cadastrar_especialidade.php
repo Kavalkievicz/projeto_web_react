@@ -3,7 +3,6 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type");
 header('Content-Type: application/json');
-
 include 'db_config.php';
 include 'Funcoes.php';
 include 'EspecialidadeFactory.php';
@@ -13,28 +12,23 @@ $data = json_decode(file_get_contents("php://input"), true);
 $especialidade = isset($data['especialidade']) ? trim($data['especialidade']) : '';
 
 if (!empty($especialidade)) {
-    $especialidadeFacade = new EspecialidadeFacade($pdo);
-    $insertEspecialidade = $especialidadeFacade->cadastrarEspecialidade($especialidade);
+    $facade = new EspecialidadeFacade($pdo);
+    $resultado = $facade->cadastrarEspecialidade($especialidade);
 
-    if ($insertEspecialidade) {
-        $result = [
+    if ($resultado) {
+        echo json_encode([
             'status' => 'success',
             'message' => 'Especialidade cadastrada com sucesso!'
-        ];
+        ]);
     } else {
-        $result = [
+        echo json_encode([
             'status' => 'error',
-            'message' => 'Falha ao cadastrar especialidade.'
-        ];
+            'message' => 'Falha ao cadastrar especialidade!'
+        ]);
     }
 } else {
-    $result = [
+    echo json_encode([
         'status' => 'error',
         'message' => 'Especialidade é obrigatória!'
-    ];
-
-    exit();
+    ]);
 }
-
-echo json_encode($result);
-?>
